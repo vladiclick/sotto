@@ -1,0 +1,19 @@
+{
+  "name": "sotto",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Private, on-device dictation for macOS: hold a key, speak, it types.",
+  "license": "MIT",
+  "scripts": {
+    "tauri": "tauri",
+    "app:start": "bash scripts/build_and_run.sh",
+    "app:dev": "tauri dev",
+    "app:build": "tauri build",
+    "ui:dev": "npm run dev --prefix ui",
+    "brand": "python3 scripts/brand.py",
+    "check": "npm run build --prefix ui && cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings && cargo test --manifest-path src-tauri/Cargo.toml"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.5.0"
+  }
+}

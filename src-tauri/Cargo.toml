@@ -1,0 +1,62 @@
+[package]
+name = "sotto"
+version = "0.1.0"
+description = "Private, on-device dictation for macOS: hold a key, speak, it types."
+authors = ["Vladimir Coman"]
+license = "MIT"
+repository = "https://github.com/vladiclick/sotto"
+edition = "2021"
+rust-version = "1.82"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# speech-to-text: whisper.cpp with its Metal backend (built from source;
+# needs `cmake` at build time — `brew install cmake`)
+whisper-rs = { version = "0.16", features = ["metal"] }
+# microphone capture
+cpal = "0.15"
+
+tauri = { version = "2", features = ["tray-icon", "macos-private-api"] }
+# a second copy would listen to the hotkey too and type every dictation twice
+tauri-plugin-single-instance = "2"
+# Settings → Launch at login (a per-user LaunchAgent)
+tauri-plugin-autostart = "2"
+# dictation key: listen-only CGEventTap on its own run loop; synthetic typing
+core-graphics = "0.24"
+core-foundation = "0.10"
+# thread QoS (pthread_set_qos_class_self_np)
+libc = "0.2"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# local usage stats (today's words, streak)
+rusqlite = { version = "0.32", features = ["bundled"] }
+chrono = "0.4"
+
+# NSWorkspace, AVCaptureDevice, NSPasteboard, NSSound, NSProcessInfo
+objc = "0.2"
+block = "0.1"
+
+# model downloads: resumable HTTPS + SHA-256 check
+ureq = "2"
+sha2 = "0.10"
+
+log = "0.4"
+env_logger = "0.11"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+# a bug must never leave the app half-alive with a dead worker thread
+panic = "abort"
+strip = "symbols"
+
+# objc 0.2 macros expand a legacy `feature = "cargo-clippy"` cfg; declare it
+# so -Zcheck-cfg doesn't warn on every msg_send! call site.
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = ['cfg(feature, values("cargo-clippy"))']

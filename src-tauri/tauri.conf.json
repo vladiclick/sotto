@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Sotto",
+  "version": "0.1.0",
+  "identifier": "io.github.vladiclick.sotto",
+  "build": {
+    "frontendDist": "../ui/dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev --prefix ../ui",
+    "beforeBuildCommand": "npm run build --prefix ../ui"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "panel",
+        "url": "panel.html",
+        "title": "Sotto",
+        "width": 320,
+        "height": 400,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "resizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "shadow": true,
+        "focus": false,
+        "windowEffects": {
+          "effects": [
+            "popover"
+          ],
+          "state": "active",
+          "radius": 14
+        }
+      },
+      {
+        "label": "overlay",
+        "url": "overlay.html",
+        "title": "Sotto \u2014 recording",
+        "width": 184,
+        "height": 56,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "resizable": false,
+        "skipTaskbar": true,
+        "shadow": false,
+        "focus": false,
+        "focusable": false,
+        "visibleOnAllWorkspaces": true,
+        "acceptFirstMouse": false
+      },
+      {
+        "label": "settings",
+        "url": "settings.html",
+        "title": "Sotto Settings",
+        "width": 760,
+        "height": 540,
+        "visible": false,
+        "resizable": false,
+        "center": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "minimizable": true,
+        "maximizable": false
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "macOSPrivateApi": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "dmg"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.png"
+    ],
+    "category": "public.app-category.productivity",
+    "macOS": {
+      "minimumSystemVersion": "12.0",
+      "entitlements": "Entitlements.plist",
+      "hardenedRuntime": true
+    },
+    "copyright": "\u00a9 2026 Vladimir Coman. MIT License.",
+    "shortDescription": "Private, on-device dictation for macOS",
+    "longDescription": "Hold a key, speak, and Sotto types what you said into any app. Whisper runs locally on the Mac\u2019s GPU; audio never leaves the device."
+  }
+}

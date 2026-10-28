@@ -1,0 +1,11 @@
+# build output
+/src-tauri/target/
+/src-tauri/gen/
+/ui/dist/
+
+# dependencies
+node_modules/
+
+# local
+.DS_Store
+*.log

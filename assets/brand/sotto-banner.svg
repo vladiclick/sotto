@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B1815"/>
+      <stop offset="1" stop-color="#0D0B0A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+  <line x1="0.0" y1="224.0" x2="1280.0" y2="224.0" stroke="#F3EFE7" stroke-opacity="0.06" stroke-width="2"/><line x1="0.0" y1="262.0" x2="1280.0" y2="262.0" stroke="#F3EFE7" stroke-opacity="0.06" stroke-width="2"/><line x1="0.0" y1="300.0" x2="1280.0" y2="300.0" stroke="#F3EFE7" stroke-opacity="0.06" stroke-width="2"/><line x1="0.0" y1="338.0" x2="1280.0" y2="338.0" stroke="#F3EFE7" stroke-opacity="0.06" stroke-width="2"/><line x1="0.0" y1="376.0" x2="1280.0" y2="376.0" stroke="#F3EFE7" stroke-opacity="0.06" stroke-width="2"/>
+  <path d="M174.38 257.84 L431.68 300.00 L174.38 342.16" fill="none" stroke="#F3EFE7" stroke-width="16.12" stroke-linecap="round" stroke-linejoin="round"/><rect x="466.40" y="207.00" width="27.28" height="186.00" rx="13.64" fill="#FF5A1F"/>
+  <text x="560" y="352" font-family="Instrument Serif" font-style="italic" font-size="196"
+        fill="#F3EFE7" letter-spacing="-2">sotto</text>
+  <text x="566" y="420" font-family="IBM Plex Mono" font-size="21" fill="#F3EFE7"
+        fill-opacity="0.62" letter-spacing="3.2">HOLD A KEY · SPEAK · IT TYPES</text>
+  <text x="96" y="566" font-family="IBM Plex Mono" font-size="17" fill="#F3EFE7"
+        fill-opacity="0.42" letter-spacing="2.4">PRIVATE ON-DEVICE DICTATION FOR macOS — WHISPER ON METAL — 100 LANGUAGES</text>
+  <rect x="96" y="586" width="44" height="4" rx="2" fill="#FF5A1F"/>
+</svg>

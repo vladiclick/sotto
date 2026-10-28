@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- menu-bar app: no Dock icon, not even for a moment at launch -->
+    <key>LSUIElement</key>
+    <true/>
+    <!-- never nap: push-to-talk must react instantly in the background -->
+    <key>LSAppNapIsDisabled</key>
+    <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Sotto listens only while you hold the dictation key and transcribes on this Mac — audio never leaves it.</string>
+</dict>
+</plist>

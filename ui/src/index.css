@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+/* ---- type ----
+   Instrument Serif Italic for the wordmark and headings, IBM Plex Mono for
+   micro-labels and key caps (both SIL OFL, bundled in public/fonts — no
+   network). Body text is the system font so it reads like macOS. */
+@font-face {
+  font-family: "Sotto Serif";
+  src: url("/fonts/InstrumentSerif-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-display: block;
+}
+@font-face {
+  font-family: "Sotto Serif";
+  src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Sotto Mono";
+  src: url("/fonts/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: "Sotto Mono";
+  src: url("/fonts/IBMPlexMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: block;
+}
+
+/* ---- brand tokens ----
+   ink / paper / one signal colour. Light by default, inverted in dark mode. */
+:root {
+  --ink: #17140f;
+  --ink-2: rgba(23, 20, 15, 0.62);
+  --ink-3: rgba(23, 20, 15, 0.4);
+  --ink-4: rgba(23, 20, 15, 0.2);
+  --paper: #f4f0e8;
+  --paper-2: #ebe5d9;
+  --raised: #fbf9f4;
+  --line: rgba(23, 20, 15, 0.11);
+  --fill: rgba(23, 20, 15, 0.055);
+  --fill-2: rgba(23, 20, 15, 0.09);
+  --signal: #ff5a1f;
+  --signal-text: #d4430c; /* AA on paper */
+  --signal-soft: rgba(255, 90, 31, 0.12);
+  --ok: #2f7d55;
+  --warn-soft: rgba(214, 140, 20, 0.14);
+  --danger-soft: rgba(214, 60, 40, 0.1);
+  --button: #17140f;
+  --button-text: #f4f0e8;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #f1ece2;
+    --ink-2: rgba(241, 236, 226, 0.64);
+    --ink-3: rgba(241, 236, 226, 0.42);
+    --ink-4: rgba(241, 236, 226, 0.2);
+    --paper: #141210;
+    --paper-2: #1c1916;
+    --raised: #221f1b;
+    --line: rgba(241, 236, 226, 0.1);
+    --fill: rgba(241, 236, 226, 0.06);
+    --fill-2: rgba(241, 236, 226, 0.1);
+    --signal-text: #ff7a45;
+    --signal-soft: rgba(255, 90, 31, 0.16);
+    --ok: #6cc795;
+    --warn-soft: rgba(230, 160, 40, 0.16);
+    --danger-soft: rgba(255, 90, 70, 0.14);
+    --button: #f1ece2;
+    --button-text: #141210;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-fill: var(--fill);
+  --color-fill-2: var(--fill-2);
+  --color-signal: var(--signal);
+  --color-signal-text: var(--signal-text);
+  --color-signal-soft: var(--signal-soft);
+  --color-ok: var(--ok);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger-soft: var(--danger-soft);
+  --color-button: var(--button);
+  --color-button-text: var(--button-text);
+  --font-serif: "Sotto Serif", "Iowan Old Style", Georgia, serif;
+  --font-mono: "Sotto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  cursor: default;
+}
+button {
+  cursor: default;
+}
+/* keyboard focus on controls; text fields show focus on their container */
+button:focus-visible,
+[role="switch"]:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+input:focus,
+textarea:focus {
+  outline: none;
+}
+.field:focus-within {
+  box-shadow: 0 0 0 1.5px var(--signal);
+}
+
+/* ---- shared pieces ---- */
+.label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.wordmark {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.keycap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--raised);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 0 var(--ink-4);
+}
+.switch {
+  position: relative;
+  width: 32px;
+  height: 19px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--fill-2);
+  transition: background 160ms ease;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transition: transform 180ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.switch[aria-checked="true"] {
+  background: var(--signal);
+}
+.switch[aria-checked="true"]::after {
+  transform: translateX(13px);
+}
+.switch:disabled {
+  opacity: 0.4;
+}
+.segmented {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border-radius: 8px;
+  background: var(--fill);
+}
+.segmented > button {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--ink-2);
+  transition: background 120ms ease, color 120ms ease;
+}
+.segmented > button[aria-pressed="true"] {
+  background: var(--raised);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--fill);
+  color: var(--ink);
+  transition: background 120ms ease;
+}
+.btn:hover {
+  background: var(--fill-2);
+}
+.btn-primary {
+  background: var(--button);
+  color: var(--button-text);
+}
+.btn-primary:hover {
+  background: var(--button);
+  opacity: 0.88;
+}
+.btn:disabled {
+  opacity: 0.4;
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--fill-2);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ---- menu-bar panel (panel.html) ----
+   The window carries native popover vibrancy; the page stays transparent. */
+html.panel,
+html.panel body {
+  background: transparent;
+  overflow: hidden;
+}
+.panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  text-align: left;
+  color: var(--ink);
+}
+.panel-row:hover {
+  background: var(--fill);
+}
+.record {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: var(--button);
+  color: var(--signal);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 120ms ease, background 160ms ease;
+}
+.record:active {
+  transform: scale(0.95);
+}
+.record.is-live {
+  background: var(--signal);
+  color: #fff;
+}
+.record.is-live::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 2px solid var(--signal);
+  opacity: 0.5;
+  animation: sotto-ring 1.6s ease-out infinite;
+}
+.record:disabled {
+  opacity: 0.55;
+}
+@keyframes sotto-ring {
+  from {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+/* ---- recording overlay (overlay.html) ----
+   Transparent click-through window above the Dock; only the pill paints. */
+html.overlay,
+html.overlay body {
+  background: transparent;
+  overflow: hidden;
+}
+.sotto-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 15px 0 14px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(36, 32, 28, 0.97), rgba(16, 14, 12, 0.97));
+  border: 1px solid rgba(244, 240, 232, 0.12);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition:
+    opacity 160ms ease,
+    transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.sotto-pill.is-hidden {
+  opacity: 0;
+  transform: translateY(6px) scale(0.92);
+}
+/* the recording indicator is the logo's cursor, blinking */
+.sotto-cursor {
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--signal);
+  box-shadow: 0 0 8px rgba(255, 90, 31, 0.7);
+  animation: sotto-blink 1.06s steps(1, end) infinite;
+  transition: opacity 160ms ease, width 200ms ease, margin 200ms ease;
+}
+.sotto-cursor.is-off {
+  opacity: 0;
+  width: 0;
+  margin-right: -10px;
+}
+.sotto-bar {
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: #f4f0e8;
+}
+@keyframes sotto-blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0.25;
+  }
+}
+
+/* ---- settings window (settings.html) ---- */
+html.settings,
+html.settings body {
+  background: var(--paper);
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sotto-cursor,
+  .record.is-live::before {
+    animation: none;
+  }
+}

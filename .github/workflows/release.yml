@@ -1,0 +1,48 @@
+name: Release
+
+# Push a tag like v0.1.0 to build Sotto.app + Sotto.dmg (Apple Silicon) and
+# attach them to a *draft* GitHub release for review before publishing.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            ui/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: cmake (needed to build whisper.cpp)
+        run: cmake --version || brew install cmake
+
+      - name: Install JS dependencies
+        run: |
+          npm ci
+          npm ci --prefix ui
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Sotto ${{ github.ref_name }}
+          releaseBody: See CHANGELOG.md. Not notarized yet — first launch with right-click → Open.
+          releaseDraft: true
+          args: --bundles app,dmg
